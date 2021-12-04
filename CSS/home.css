@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+}
+
+/* HOME SECTION STYLING*/
+.home-section {
+    width: 100vw; /* vw = variable width - helps responsiveness */
+    height: 100vh; /* vh = variable height - helps responsiveness */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url("https://cdn.redshift.autodesk.com/2016/04/sharing-economy-animated-hero.gif");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.6;
+}
+
+h1 {
+    font-size: 8em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: black;
+}
+
+h4{
+    font-size: 2em;
+    color: black;
+}

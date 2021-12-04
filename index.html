@@ -1,0 +1,81 @@
+<html lang="en" ng-app="Dashboard">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>Image.io</title>
+
+      <link rel="stylesheet" type="text/css" href="CSS/bootstrap.min.css">
+      <script type="text/javascript" src="JS/bootstrap.js"></script>
+      <script type="text/javascript" src="JS/bootstrap.bundle.min.js"></script>
+      <script type="text/javascript" src="JS/jquery-3.6.0.min.js"></script>
+
+      <script type="text/javascript" src="JS/app.js"></script>
+
+  </head>
+
+        <div class="navbar navbar-expand-sm bg-dark
+            navbar-dark fixed-top">
+          <span class="navbar-brand">
+            Image.io
+          </span>
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="index.html">Feed</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href='AddImage.html'>Upload A Post</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link"
+                     href="Register.html">Register</a>
+              </li>
+              <li class="navbar-nav pull-right">
+                  <a class="nav-link"
+                     href="login.html">Login</a>
+              </li>
+              <div class = "form-inline ms-auto"
+                   style = "margin-left: 800px !important;">
+                  <button id="logoutbtn"class="btn btn-outline-light"
+                          (click) = "onSubmit()">Logout</button>
+              </div>
+          </ul>
+      </div>
+  <body>
+
+    <div  class="container">
+
+        <!--Header-->
+        <div class="row align-items-start">
+            <div class="col-2"  ></div>
+
+            <div class="col-8" style="text-align: center;">
+                <br /><br /><br />
+              <h3>Feed</h3>
+            </div>
+
+            <div class="col-2"  ></div>
+        </div>
+
+        <!-- view Asset Area-->
+        <div class="row align-items-start">
+            <div class="col-2"  ></div>
+
+            <div class="col-8" style="text-align: left;" >
+
+              <div id="ImageList">
+
+                <h4>Please click the view Images button if you wish to view images on the system.</h4>
+
+              </div>
+            </div>
+
+            <div class="col-2"  ></div>
+        </div>
+
+    </div>
+  
+  </body>
+</html>
