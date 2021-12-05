@@ -1,12 +1,16 @@
-//The URIs of the REST endpoint
-CIA = "https://imageioapi.azurewebsites.net:443/api/CIA/triggers/manual/invoke?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=UvwRJ-mAkCevVShjX__QeIjgoEeEbpYRcBRubDcZ4kQ";
-RAI = "https://imageioapi.azurewebsites.net:443/api/RAI/triggers/manual/invoke?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=663tCA1ZtDLnzbN6NiBToJiHkjisrf1V1Ueav1Dsh6E";
-BASEDAI = "https://imageioapi.azurewebsites.net/api/DIA/triggers/manual/invoke/rest/v1/images/";
-TAILDAI = "?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=R_9eueML1FKwCgNQM5H5mihDn2GBWjIsv8gGJi2cm1Q";
-BASEUIA = "https://imageioapi.azurewebsites.net/api/UIA/triggers/manual/invoke/rest/v1/images/";
-TAILUIA = "?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YbV8obECiWPxIFQz4vhS1p5zz5DHMb4zcxMuUekQtzM";
-CREATEUSERS = "https://imageioapi.azurewebsites.net:443/api/CreateUsers/triggers/manual/invoke?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wQ2zfM90bcrcps95uCIxlRPxFmAPf3ATu41DTnIfUNw";
-LOGINUSER = "https://imageioapi.azurewebsites.net:443/api/LoginUser/triggers/manual/invoke?api-version=2020-05-01-preview&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sFsBWcPG6zMrqzXobkfbVmNQnhJFXOoDIFtiQr9ZtfE"
+//The URIs of the REST endpoint of images
+CIA = "https://prod-24.northcentralus.logic.azure.com:443/workflows/a6b3322bf0f04a0fb5fdd38d1f7f5ba3/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gclQqp8Z1TmkG7ACcSC_ZAUrxJC7TsZHNUcGCBrl-u8";
+RAI = "https://prod-27.northcentralus.logic.azure.com:443/workflows/5e73a6cc7ead4e7b85104dac8732bb9a/versions/08585628849145846886/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Fversions%2F08585628849145846886%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=MyvgI4h7tGZgBw3iEhwCZ3w7tptjr812sdA9O2hM9Hg";
+BASEDAI = "https://prod-14.ukwest.logic.azure.com/workflows/7cabc07c991743ea9ccaadcde756de11/triggers/manual/paths/invoke/rest/v1/images/";
+TAILDAI = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZndfDtiW-jMt-ETcvshI5sL9qVmVoJNL6UGukz3yJ-M";
+BASEUIA = "https://prod-02.uksouth.logic.azure.com/workflows/b50fd994bee14ee3b74a45ec5ed5564e/triggers/manual/paths/invoke/rest/v1/images/";
+TAILUIA = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KeZ8K1JgHlEjqu26LhPEM8HT2yBhLr-NQ5CafynOf_8";
+//The URIs of REST endpoints for Reg/Login
+CREATEUSERS = "https://prod-14.uksouth.logic.azure.com:443/workflows/eeaaeb70a6d0416eb7f6414d14ea520c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=jfY48aqF8fa2w3jItKTgdIzOfktv2r9J0jIGgXPkFL8";
+BASELOGINUSER = "https://prod-14.uksouth.logic.azure.com/workflows/c636c76322694414ae077da8b8606f75/triggers/manual/paths/invoke/rest/v1/login/";
+TAILLOGINUSER = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Y7YbnrreOySo4MqXYL3K470njVEAHqySIOvAsm5nznM";
+//User data URI REST enpoints
+GETUSERS = "https://prod-29.uksouth.logic.azure.com:443/workflows/fa28887cfa5641cc885c1bbad1242f68/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PlghKEq_L3CVmGwpcmopex68jFQoU5MFBQ7CkQOI22k";
 BLOB_ACCOUNT = "https://blobstorageuurm.blob.core.windows.net";
 
 
@@ -14,38 +18,38 @@ BLOB_ACCOUNT = "https://blobstorageuurm.blob.core.windows.net";
 //Handlers for button clicks
 $(document).ready(function() {
 
-      //Run the get images list function
+  //Run the get images list function
   getImages();
 
 
-   //Handler for the new asset submission button
-  $("#subNewForm").click(function(){
+  //Handler for the new asset submission button
+  $("#subNewForm").click(function () {
 
     //Execute the submit new asset function
     submitNewImage();
-    
-  });
-
-
-  //Handler for the updating image details submission button
-  $("#updateForm").click(function(editid){
-
-    //Execute the submit new asset function
-    editImageDetails(editid);
 
   });
+
 
   //Handler for the new asset submission button
-  $("#deletephoto").click(function(id){
-      deletePhoto(id)
+  $("#deletephoto").click(function (id) {
+    deletePhoto(id)
     //Execute the submit new asset function
 
 
   });
+
+  $("#loginForm").click(function () {
+
+    //Execute
+    login();
+
+  });
+
 });
 
 /****************************************************
- *                 Posting images                   *
+ *                 Images Functions                 *
  ****************************************************/
 
 //A function to submit a new asset to the REST endpoint 
@@ -154,6 +158,14 @@ function editImageDetails(editid){
   });
 }
 
+//Handler for the updating image details submission button
+$("#updateForm").click(function(editid){
+
+  //Execute the submit new asset function
+  editImageDetails(editid);
+
+});
+
 // Hiding/showing form
 let isShow = false;
 function myFunction() {
@@ -169,6 +181,14 @@ function myFunction() {
  *           Login/Registration System              *
  ****************************************************/
 
+//Handler for the adding users to DB
+$("#registrationForm").click(function(){
+
+  //Execute the submit new asset function
+  postUser();
+
+});
+
 //A function to Create a user to the user
 function postUser() {
 
@@ -176,10 +196,10 @@ function postUser() {
   submitData = new FormData
 
   //Get form variables and append them to the form data object
-  submitData.append('firstName', $('#firstName').val());
-  submitData.append('surname', $('#surname').val());
-  submitData.append('username', $('#username').val());
-  submitData.append('password', $("#password").val());
+  submitData.append('FirstName', $('#firstName').val());
+  submitData.append('LastName', $('#surname').val());
+  submitData.append('Username', $('#username').val());
+  submitData.append('Password', $("#password").val());
 
   //Post the form data to the endpoint, note the need to set the content type header
   $.ajax({
@@ -196,41 +216,41 @@ function postUser() {
   });
 }
 
-//Handler for the adding users to DB
-$("#regForm").click(function(){
-
-  //Execute the submit new asset function
-  postUser();
-
-});
 
 // login to the system
-function login(id){
-  //form object
-  submitData = new FormData
+function login() {
 
   //Get form variables and append them to the form data object
-  submitData.append('username', $('#username').val());
-  submitData.append('password', $('#password').val());
+  username = ('Username', $('#Username').val());
+  password = ('Password', $('#Password').val());
 
   //Update form data to the endpoint
   $.ajax({
-    url: LOGINUSER,
-    data: submitData,
-    cache: false,
-    enctype: 'multipart/form-data',
-    contentType: false,
-    processData: false,
+    url: BASELOGINUSER + username + '/' + password + TAILLOGINUSER,
     type: 'GET',
     success: function (data) {
+      localStorage.setItem('UserID', "84");
     }
   });
 }
 
-$("#loginForm").click(function(){
+//!!!!!!!! FINISH !!!!!!!!!!//
+function getUsers() {
 
-  //Execute
-  login();
+  //Replace the current HTML in that div with a loading message
+  $('#getUsers').html('<div class="spinner-border" role="status"><span class="sr-only">' +
+      '&nbsp;</span>');
 
-});
+  $.getJSON(GETUSERS, function (data) {
 
+    //Create an array to hold all the retrieved assets
+    var items = [];
+
+    //Iterate through the returned records and build HTML, incorporating the key values of the record in the data
+    $.each(data, function (key, val) {
+      items.push("<hr />");
+      items.push("<img alt='uploadedimages' src='" + BLOB_ACCOUNT + val["filepath"] + "' width='400'/> <br />");
+
+    })
+  })
+}
