@@ -7,6 +7,8 @@ BASEDAI = "https://prod-14.ukwest.logic.azure.com/workflows/7cabc07c991743ea9cca
 TAILDAI = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZndfDtiW-jMt-ETcvshI5sL9qVmVoJNL6UGukz3yJ-M";
 BASEUIA = "https://prod-14.uksouth.logic.azure.com/workflows/63b965e90eda42d583411827b005718e/triggers/manual/paths/invoke/rest/v1/images/";
 TAILUIA = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=OWVgM6GzBL7afbxqacYdm33HEaDEJAEglRYbpz1jGgk";
+BASEMYPOSTS = "https://prod-04.uksouth.logic.azure.com/workflows/24776ab47f794d07a8594f95b98e6364/triggers/manual/paths/invoke/rest/v1/posts/";
+TAILMYPOSTS = "?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yFr2MK72pUcopoD1WwrU-_foH-7NfkKyhfDSHX2vfZw";
 //The URIs of REST endpoints for Reg/Login
 CREATEUSERS = "https://prod-14.uksouth.logic.azure.com:443/workflows/eeaaeb70a6d0416eb7f6414d14ea520c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=jfY48aqF8fa2w3jItKTgdIzOfktv2r9J0jIGgXPkFL8";
 BASELOGINUSER = "https://prod-14.uksouth.logic.azure.com/workflows/c636c76322694414ae077da8b8606f75/triggers/manual/paths/invoke/rest/v1/login/";
@@ -54,7 +56,7 @@ $(document).ready(function() {
 
   getImages();
   getUsers();
-
+  getMyImages();
 
 });
 
@@ -113,8 +115,8 @@ function getImages(id) {
       items.push('<button type="button" id="deletephoto" class="btn btn-danger" onclick="deletePhoto(\''+ val["id"]+'\')">Delete</button><br/><br/>');
       items.push('<div id="myDIV"><p>Update Image</p>')
       items.push('<form style="font-size: 10pt;" id="newUpdateForm">')
-      items.push('<div class="mb-3"> <label for="FileName" class="form-label">File Name</label><input type="text" class="form-control" id="FileName"></div>');
-      items.push('<div class="mb-3"><label For="File" class="form-label">File to Upload</label><input type="file" class="form-control" id="File"></div>');
+      items.push('<div class="mb-3"> <label for="FileName" class="form-label">File Name</label><input type="text" class="form-control" id="editFileName"></div>');
+      items.push('<div class="mb-3"><label For="File" class="form-label">File to Upload</label><input type="file" class="form-control" id="editFile"></div>');
       items.push('<button type="button" onclick="editImageDetails(\''+ val["id"]+'\')" class="btn btn-primary">Submit</button> <br/><br/> </form></div>')
 
     });
@@ -128,31 +130,44 @@ function getImages(id) {
   });
 }
 
-// A function for editing Image details
-function editImageDetails(id){
+//A function to get a list of all the assets and write them to the Div with the AssetList Div
+function getMyImages(UserID) {
+  UserID = localStorage.getItem('UserID');
+  //Replace the current HTML in that div with a loading message
+  $('#getMyPosts').html('<div class="spinner-border" role="status"><span class="sr-only">' +
+      '&nbsp;</span>');
 
-  //form object
-  submitData = new FormData
+  $.getJSON(BASEMYPOSTS + UserID + TAILMYPOSTS, function (data) {
 
-  //Get form variables and append them to the form data object
-  submitData.append('fileName', $('#FileName').val());
-  submitData.append('File', $("#File")[0].files[0]);
+    //Create an array to hold all the retrieved assets
+    var items = [];
 
-  //Update form data to the endpoint
-  $.ajax({
-    type: "PUT",
-    data: submitData,
-    cache: false,
-    enctype: 'multipart/form-data',
-    contentType: false,
-    processData: false,
-    //Note the need to concatenate the ID
-    url: BASEUIA + id + TAILUIA,
-  }).done(function( msg ) {
-    //On success, update the imagelist.
-    getImages();
+    //Iterate through the returned records and build HTML, incorporating the key values of the record in the data
+    $.each(data, function (key, val) {
+      items.push("<hr />");
+      items.push("<img alt='uploadedimages' src='" + BLOB_ACCOUNT + val["filepath"] + "' width='400'/> <br />");
+      items.push("File: " + val["fileName"] + "<br />");
+      items.push("Uploaded by: " + val["userName"] + " (user id: " + val["UserID"] + ")<br />");
+      items.push("<hr />");
+      items.push('<button type="button" id="editPhoto" class="btn btn-dark" onclick="myFunction()">Edit</button <br/>')
+      items.push('<button type="button" id="deletephoto" class="btn btn-danger" onclick="deletePhoto(\''+ val["id"]+'\')">Delete</button><br/><br/>');
+      items.push('<div id="myDIV"><p>Update Image</p>')
+      items.push('<form style="font-size: 10pt;" id="newUpdateForm">')
+      items.push('<div class="mb-3"> <label for="FileName" class="form-label">File Name</label><input type="text" class="form-control" id="editFileName"></div>');
+      items.push('<div class="mb-3"><label For="File" class="form-label">File to Upload</label><input type="file" class="form-control" id="editFile"></div>');
+      items.push('<button type="button" onclick="editImageDetails(\''+ val["id"]+'\')" class="btn btn-primary">Submit</button> <br/><br/> </form></div>')
+
+    });
+    //Clear the assetlist div
+    $('#getMyPosts').empty();
+    //Append the contents of the items array to the ImageList Div
+    $("<ul/>", {
+      "class": "my-new-list",
+      html: items.join("")
+    }).appendTo("#getMyPosts");
   });
 }
+
 
   function deletePhoto(id){
     $.ajax({
@@ -162,9 +177,35 @@ function editImageDetails(id){
     }).done(function( msg ) {
     //On success, update the imagelist.
       getImages();
+      getMyImages();
     });
   }
 
+// A function for editing Image details
+function editImageDetails(id){
+
+  //form object
+  submitData = new FormData
+
+  //Get form variables and append them to the form data object
+  submitData.append('fileName', $('#editFileName').val());
+  submitData.append('File', $("#editFile")[0].files[0]);
+
+  //Update form data to the endpoint
+  $.ajax({
+    url: BASEUIA + id + TAILUIA,
+    type: "PUT",
+    data: submitData,
+    cache: false,
+    enctype: 'multipart/form-data',
+    contentType: false,
+    processData: false,
+  }).done(function( msg ) {
+    //On success, update the imagelist.
+    getImages();
+    getMyImages();
+  });
+}
 // Hiding/showing form
 let isShow = false;
 function myFunction() {
