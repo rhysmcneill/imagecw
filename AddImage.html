@@ -29,6 +29,10 @@
         <li class="nav-item">
             <a class="nav-link" href='AddImage.html'>Upload A Post</a>
         </li>
+        <li class="navbar-nav pull-right">
+            <a class="nav-link"
+               href="FollowUsers.html">Userlist</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link"
                href="Register.html">Register</a>
@@ -40,7 +44,7 @@
         <div class = "form-inline ms-auto"
              style = "margin-left: 800px !important;">
             <button id="logoutbtn"class="btn btn-outline-light"
-                    (click) = "onSubmit()">Logout</button>
+                    onclick="logout()">Logout</button>
         </div>
     </ul>
 </div>
@@ -73,15 +77,6 @@
                     <input type="text" class="form-control" id="FileName">
                 </div>
 
-                <div class="mb-3">
-                    <label for="userID" class="form-label">User Id</label>
-                    <input type="string" class="form-control" id="userID">
-                </div>
-
-                <div class="mb-3">
-                    <label for="userName" class="form-label">User Name</label>
-                    <input type="text" class="form-control" id="userName">
-                </div>
 
                 <div class="mb-3">
                     <label for="UpFile" class="form-label">File to Upload</label>
